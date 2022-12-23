@@ -7,6 +7,8 @@ const { writeFile, readJSON, writeJSON } = fs;
 const dataPATH = join(dirname(fileURLToPath(import.meta.url)), "../data");
 const productsPATH = join(dataPATH, "products.json");
 
+const publicPATH = join(process.cwd(), "./public/images/products");
+
 console.log(productsPATH);
 
 export const readProducts = () => {
@@ -15,4 +17,8 @@ export const readProducts = () => {
 
 export const writeProducts = (products) => {
   return writeJSON(productsPATH, products);
+};
+
+export const saveImages = (imageName, image) => {
+  writeFile(join(publicPATH, imageName), image);
 };
