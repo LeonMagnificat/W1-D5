@@ -8,12 +8,20 @@ reviewsRouter.post("/:id/reviews", checkReviewSchema, detectBadRequest, async (r
   try {
     const newReview = { ...req.body, date: new Date(), productId: req.params.id };
     const productsArray = await readProducts();
-    const reviewedProduct = productsArray.find((product) => product.id === req.params.id);
+    const productIndex = productsArray.findIndex((product) => product.id === req.params.id);
 
-    const productWithReview = { ...reviewedProduct, updatedAt: new Date(), reviews: newReview };
-    productsArray.push(productWithReview);
+    const oldProduct = productsArray[productIndex];
+
+    oldProduct.reviews.push(newReview);
+    productsArray[productIndex] = oldProduct;
+
     await writeProducts(productsArray);
-    res.status(200).send(productWithReview);
+
+    console.log(productsArray);
+
+    console.log(productIndex);
+    console.log(oldProduct);
+    res.status(200).send(oldProduct);
   } catch (error) {
     next(error);
   }

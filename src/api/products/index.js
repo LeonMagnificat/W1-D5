@@ -7,7 +7,7 @@ const productsRouter = express.Router();
 
 productsRouter.post("/", checkProductSchema, detectBadRequest, async (req, res, next) => {
   try {
-    const addedProduct = { ...req.body, id: uniqid(), createdAt: new Date(), updatedAt: new Date() };
+    const addedProduct = { ...req.body, id: uniqid(), reviews: [], createdAt: new Date(), updatedAt: new Date() };
     console.log(addedProduct);
     const productsArray = await readProducts();
     console.log(productsArray);

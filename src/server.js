@@ -1,7 +1,7 @@
 import express from "express";
 import productsRouter from "./api/products/index.js";
 import listEndpoints from "list-endpoints-express";
-import { badRequest } from "./errorsHandler.js";
+import { badRequest, unauthorizedHandler, notFoundHandler, genericHandler } from "./errorsHandler.js";
 import productImageRouter from "./api/files/index.js";
 import reviewsRouter from "./api/reviews/index.js";
 import { join } from "path";
@@ -19,6 +19,9 @@ server.use("/product", productImageRouter);
 server.use("/products", reviewsRouter);
 
 server.use(badRequest);
+server.use(unauthorizedHandler);
+server.use(notFoundHandler);
+server.use(genericHandler);
 
 server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
