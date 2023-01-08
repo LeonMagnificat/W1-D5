@@ -37,17 +37,6 @@ productsRouter.get("/", async (req, res, next) => {
   }
 });
 
-// productsRouter.get("/", async (req, res, next) => {
-//   try {
-//     const productsArray = await readProducts();
-//     const searchedProducts = productsArray.filter((product) => product.category === req.params.category);
-//     console.log(req.params);
-//     res.status(200).send(searchedProducts);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
 productsRouter.get("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
