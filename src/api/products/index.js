@@ -22,12 +22,31 @@ productsRouter.post("/", checkProductSchema, detectBadRequest, async (req, res, 
 
 productsRouter.get("/", async (req, res, next) => {
   try {
-    const productsArray = await readProducts();
-    res.status(200).send(productsArray);
+    if (Object.keys(req.query).length) {
+      const productsArray = await readProducts();
+      const categoryProducts = productsArray.filter((product) => product.category === req.query.category);
+      res.status(200).send(categoryProducts);
+      //console.log(Object.keys(req.query).length);
+    } else {
+      const productsArray = await readProducts();
+      res.status(200).send(productsArray);
+      //console.log(req.query);
+    }
   } catch (error) {
     next(error);
   }
 });
+
+// productsRouter.get("/", async (req, res, next) => {
+//   try {
+//     const productsArray = await readProducts();
+//     const searchedProducts = productsArray.filter((product) => product.category === req.params.category);
+//     console.log(req.params);
+//     res.status(200).send(searchedProducts);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 productsRouter.get("/:id", async (req, res, next) => {
   try {
